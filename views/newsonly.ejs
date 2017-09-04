@@ -17,9 +17,6 @@
 			<tr>
 			    <th>Counterparty</th>
 			    <th>Ultimate Parent Counter Party</th>
-			    <th>Bank Legal Entity</th>
-			    <th>MTM Net  (Mn $)</th>
-			    <th>CVA</th>
 			    <th>News Analytics Score</th>
 			    <th>Last Refresh Time</th>
 			    <th>Credit Rating</th>
@@ -27,11 +24,8 @@
 			<% if(data.length){ 
 			for(var i = 0;i < data.length;i++) { %>
 			<tr>
-				<td><a href="#"><%=data[i].CM_CP_NAME%></a></td>
+			    <td><%=data[i].CM_CP_NAME%></td>
 			    <td><%=data[i].CM_ULTIMATE_PARENT_NAME%></td>
-			    <td><%=data[i].CDC_LEGAL_ENTITYTYPE%></td>
-			    <td><%=data[i].CDC_MTM_NET%></td>
-			    <td><%=data[i].CDC_CVA%></td>
 			    <td><%=data[i].AD_SCORE%></td>
 			    <td><%=data[i].AD_SCORE_UPDATETIME%></td>
 			    <td><%=data[i].CM_CURRENT_RATING%></td>
