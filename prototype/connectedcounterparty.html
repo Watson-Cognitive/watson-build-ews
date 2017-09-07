@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html>
+<title>EWS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link href="../public/stylesheets/paging.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="../public/js/jquery.table.hpaging.min.js"></script>
+<script>
+	$(document).ready(function() { 
+		   $("table").hpaging({ 
+			"limit": 10 
+			});
+	});
+
+	$("table").hpaging({ 
+		activePage: 1,
+		parentID: '',
+		navBar: null,
+		totalPages: ''
+	});
+</script>
+<style>
+	.heading1 {
+		background-color: #9e4c4c;
+	} 
+</style>
+<body>
+	<div class="w3-container" style="background-color: #3993c0;">
+		<p class="w3-xlarge ">
+				News Analytics for Counterpartry Credit Risk
+		</p>
+		<img alt="TCS Logo" src="../public/images/tcs-logo.png" style="position: absolute;top: 0;right: 0;height: 84px;">
+	</div>
+	<br>
+	<center><h1 class="heading1">Connected Counterparty Details for Mumbai</h1></center>
+	<br>
+	<div class="w3-container">
+		<table class="w3-table-all">
+			<tr>
+				<td>Counterparty Name: <b>Mumbai</b></td>
+				<td>Parent Name: <b>A</b></td>
+				<td>Current Sentiment Score: <b>50 %</b></td>
+				<td>Geography: <b>test data</b></td>
+			</tr>
+		</table>
+	</div>
+	<br>
+	<div class="w3-container">
+	  <table class="w3-table-all">
+			<tr>
+			    <th>Connected Counterparty</th>
+			    <th>Ultimate Parent Name</th>
+			    <th>Nature of Relationship</th>
+			    <th>MTM Net  (Mn $)</th>
+			    <th>CVA</th>
+			    <th>News Analytics Score</th>
+			    <th>Last Refresh Time</th>
+			    <th>Credit Rating</th>
+			</tr>
+			
+			<tr>
+				<td><a href="counterpartydetails?cp_id=CIDANP">Mumbai</a></td>
+			    <td>A&amp;P, INC</td>
+			    <td>SELF</td>
+			    <td>33</td>
+			    <td>22</td>
+			    <td>50</td>
+			    <td>5/9/2017 @ 14:46:45</td>
+			    <td>BBB-</td>
+			</tr>
+			
+			<tr>
+				<td><a href="counterpartydetails?cp_id=CIDPH">Post Holdings</a></td>
+			    <td>Post Holdings, INC</td>
+			    <td>ECONOMIC</td>
+			    <td>33</td>
+			    <td>22</td>
+			    <td>42</td>
+			    <td>22-Jul-2017 18:44:13 pm</td>
+			    <td>BB+</td>
+			</tr>
+			
+			<tr>
+				<td><a href="counterpartydetails?cp_id=CIDSAFEWAY">Safeway, INC.</a></td>
+			    <td>Safeway, AY.</td>
+			    <td>ECONOMIC</td>
+			    <td>33</td>
+			    <td>22</td>
+			    <td>41</td>
+			    <td>22-Jul-2017 18:44:13 pm</td>
+			    <td>BBB-</td>
+			</tr>
+			
+			<tr>
+				<td><a href="counterpartydetails?cp_id=CIDPORT">Portigon, AG</a></td>
+			    <td>Portigon, IGG</td>
+			    <td>CONTROL</td>
+			    <td>33</td>
+			    <td>22</td>
+			    <td>40</td>
+			    <td>22-Jul-2017 18:44:13 pm</td>
+			    <td>A+</td>
+			</tr>
+			
+			<tr>
+				<td><a href="counterpartydetails?cp_id=CIDMSF">Monument street funding, LLC</a></td>
+			    <td>Monument street funding, INC</td>
+			    <td>CONTROL</td>
+			    <td>33</td>
+			    <td>22</td>
+			    <td>39</td>
+			    <td>22-Jul-2017 18:44:13 pm</td>
+			    <td>BBB+</td>
+			</tr>
+			
+			<tr>
+				<td><a href="counterpartydetails?cp_id=CIDFNP">First national bank of pennsylvania</a></td>
+			    <td>First national bank of pennsylvania, INC</td>
+			    <td>CONTROL</td>
+			    <td>33</td>
+			    <td>22</td>
+			    <td>38</td>
+			    <td>22-Jul-2017 18:44:13 pm</td>
+			    <td>B</td>
+			</tr>
+			
+		</table>
+	</div>
+
+</body>
+</html>

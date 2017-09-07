@@ -10,10 +10,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="js/jquery.table.hpaging.min.js"></script>
 <script>
-	$(document).ready(function() { 
+    $(document).ready(function() { 
 		   $("table").hpaging({ 
 			"limit": 10 
-			});
+		  });
 	});
 
 	$("table").hpaging({ 
@@ -30,32 +30,20 @@
 		</p>
 		<img alt="TCS Logo" src="images/tcs-logo.png" style="position: absolute;top: 0;right: 0;height: 84px;">
 	</div>
-	<div class="w3-container">
-	  <table class="w3-table-all">
-			<tr>
-			    <th>Counterparty</th>
-			    <th>Ultimate Parent Counter Party</th>
-			    <th>News Analytics Score</th>
-			    <th>Last Refresh Time</th>
-			    <th>Credit Rating</th>
-			</tr>
-			<% if(data.length){ 
-			for(var i = 0;i < data.length;i++) { %>
-			<tr>
-				<td><a href="counterparty?cp_id=<%=data[i].CM_CP_ID%>"><%=data[i].CM_CP_NAME%></a></td>
-			    <td><%=data[i].CM_ULT_PARNT_NAME%></td>
-			    <td><%=data[i].AD_SCORE%></td>
-			    <td><%=data[i].AD_SCORE_UPDTIME%></td>
-			    <td><%=data[i].CM_CURRENT_RATING%></td>
-			</tr>
-			<% }
-				}else{ %>
-			<tr>
-				<td colspan="3">No Data</td>
-			</tr>
-			<% } %>
-		</table>
-	</div>
-
+    <br>
+    <div class="w3-cell-row" style="width:100%">
+            <div class="w3-container w3-red w3-cell">
+              <p>Hello W3.CSS Layout.</p>
+            </div>
+            <div class="w3-container w3-green w3-cell">
+                    <div class="w3-container w3-red">
+                            <p>Hello W3.CSS Layout.</p>
+                          </div>
+                          
+                          <div class="w3-container w3-green">
+                            <p>Hello W3.CSS Layout.</p>
+                          </div>
+            </div>
+    </div>
 </body>
 </html>

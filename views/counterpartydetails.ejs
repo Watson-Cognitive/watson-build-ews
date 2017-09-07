@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<title>EWS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link href="stylesheets/paging.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="js/jquery.table.hpaging.min.js"></script>
+<style>
+	.heading1 {
+		background-color: #9e4c4c;
+	} 
+</style>
+<script>
+    $(document).ready(function() { 
+           $("table").hpaging({ 
+            "limit": 10 
+            });
+    });
+
+    $("table").hpaging({ 
+        activePage: 1,
+        parentID: '',
+        navBar: null,
+        totalPages: ''
+    });
+</script>
+<body>
+	<div class="w3-container" style="background-color: #3993c0;">
+		<p class="w3-xlarge ">
+				News Analytics for Counterpartry Credit Risk
+		</p>
+		<img alt="TCS Logo" src="images/tcs-logo.png" style="position: absolute;top: 0;right: 0;height: 84px;">
+    </div>
+    <div class="w3-container">
+            <br>
+            <center><h1 class="heading1">Details for <%=data.cp_name%></h1></center>
+            <br>
+            <table class="w3-table-all">
+                <tr>
+                    <td>Counterparty Name: <b><%=data.cp_name%></b></td>
+                    <td>Parent Name: <b><%=data.ult_parnt_name%></b></td>
+                    <td>Current Sentiment Score: <b><%=data.ad_score%> %</b></td>
+                    <td>Geography: <b><%=data.cod[0].CDC_CNTRY_RISK%></b></td>
+                </tr>
+            </table>
+            <br>
+    </div>    
+    <div class="w3-row w3-container">
+        <div class="w3-col s2 w3-center">
+            <p><b>Agreement Date:</b></p>
+        </div>
+        <div class="w3-col s1 w3-center">
+            <p>20-Mar-07</p>
+        </div>
+        <div class="w3-col s2 w3-center w3-border-left">
+            <p><b>Closeout Netting Legal Opinion:</b></p>
+        </div>
+        <div class="w3-col s1 w3-center">
+            <p>Yes</p>
+        </div>
+        <div class="w3-col s2 w3-center w3-border-left">
+            <p><b>Closeout Netting Legal Opinion Type:</b></p>
+        </div>
+        <div class="w3-col s1 w3-center">
+            <p>Clean</p>
+        </div>
+        <div class="w3-col s2 w3-center w3-border-left">
+            <p><b>Closeout Netting Legal Opinion Date:</b></p>
+        </div>
+        <div class="w3-col s1 w3-center">
+            <p>01-Jan-08</p>
+        </div>
+    </div>    
+    <div class="w3-row w3-container">
+        <div class="w3-col s2 w3-center">
+                <p><b>CSA:</b></p>
+        </div>
+        <div class="w3-col s1 w3-center">
+            <p>Yes</p>
+        </div>
+        <div class="w3-col s2 w3-center w3-border-left">
+            <p><b>Closeout Netting:</b></p>
+        </div>
+        <div class="w3-col s1 w3-center">
+            <p>Yes</p>
+        </div>
+        <div class="w3-col s2 w3-center w3-border-left">
+            <p><b>Settlement Netting:</b></p>
+        </div>
+        <div class="w3-col s1 w3-center">
+            <p>No</p>
+        </div>
+        <div class="w3-col s2 w3-center w3-border-left">
+            <p><b>Use Netting Pool:</b></p>
+        </div>
+        <div class="w3-col s1 w3-center">
+            <p>Yes</p>
+        </div>
+    </div>
+    <br>
+    <div class="w3-container">
+        <div class="w3-row">
+            <div class="w3-col w3-container m8 l9">
+                <center><b>Portfolio Details</b></center><br>
+                <table class="w3-table-all">
+                    <tr>
+                            			 							
+                        <th>Legal Entity</th>
+                        <th>Product</th>
+                        <th>Deal Count</th>
+                        <th>Exposure</th>
+                        <th>Type</th>
+                        <th>Measure</th>
+                        <th>Time Band</th>
+                        <th>Exposure (mn $)</th>
+                        <th>Availabe</th>
+                        <th>Limit Expiry</th>
+                        <th>Tenor</th>
+                    </tr>
+                    <% if(data.pdl && data.pdl.length){ 
+                    for(var i = 0;i < data.pdl.length;i++) { %>
+                    <tr>
+                        <td><%=data.pdl[i].CDC_LEGAL_ENTITYTYPE%></td>
+                        <td><%=data.pdl[i].CDC_PRODUCTS%></td>
+                        <td><%=data.pdl[i].CDC_DEAL_COUNT%></td>
+                        <td><%=data.pdl[i].CDC_EXP_TYPE%></td>
+                        <td><%=data.pdl[i].CDC_MEASURE%></td>
+                        <td><%=data.pdl[i].CDC_TIME_BAND%></td>
+                        <td><%=data.pdl[i].CDC_LIMIT%></td>
+                        <td><%=data.pdl[i].CDC_EXPOSURE%></td>
+                        <td><%=data.pdl[i].CDC_AVAILABLE%></td>
+                        <td><%=data.pdl[i].CDC_LIMIT_EXP%></td>
+                        <td><%=data.pdl[i].CDC_TENOR%></td>
+                    </tr>
+                    <% }
+                        }else{ %>
+                    <tr>
+                        <td colspan="11">No Data</td>
+                    </tr>
+                        <% } %>
+                </table>
+            </div>
+            <div class="w3-col w3-container m4 l3">
+                <center><b>Counterparty Details</b></center><br>
+                <table>
+                    <tr>
+                        <td>Customer Name:</td>
+                        <td><%=data.cod[0].CM_CP_NAME%></td>
+                    </tr>
+                    <tr>
+                        <td>Customer ID:</td>
+                        <td><%=data.cod[0].CM_CP_ID%></td>
+                    </tr>
+                    <tr>
+                        <td>Alternate Parent Name:</td>
+                        <td><%=data.cod[0].CM_ULT_PARNT_NAME%></td>
+                    </tr>
+                    <tr>
+                        <td>Alternate Parent ID:</td>
+                        <td><%=data.cod[0].CM_ULT_PARENT_ID%></td>
+                    </tr>
+                    <tr>
+                        <td>Risk Officer:</td>
+                        <td><%=data.cod[0].CLM_RISK_OFFICER%></td>
+                    </tr>
+                    <tr>
+                        <td>Country of Risk:</td>
+                        <td><%=data.cod[0].CDC_CNTRY_RISK%></td>
+                    </tr>
+                    <tr>
+                        <td>Country of Domicile:</td>
+                        <td><%=data.cod[0].CDC_CNTRY_DMCILE%></td>
+                    </tr>
+                    <tr>
+                        <td>Internal Rating:</td>
+                        <td><%=data.cod[0].CDC_INT_RATING%></td>
+                    </tr>
+                    <tr>
+                        <td>External Rating:</td>
+                        <td><%=data.cod[0].CM_CURRENT_RATING%></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div> 	
+</body>
+</html>

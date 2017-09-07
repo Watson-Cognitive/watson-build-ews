@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>EWS</title>
+  	<link rel="stylesheet" href="stylesheets/login.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/admin.js"></script>
+	<style>
+		.btn {
+			border: none;
+			color: white;
+			padding: 14px 28px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		.success {background-color: #4CAF50;} /* Green */
+		.success:hover {background-color: #46a049;}
+	</style>
+
+</head>
+<body>
+	<div class="w3-container" style="background-color: #3993c0;">
+		<img alt="TCS Logo" src="images/tcs-logo.png" style="position: absolute;top: 0;right: 0;height: 86px;">
+		<div class="header">
+	    	<div class="w3-display-topmiddle w3-hide-small">
+	    		<p class="w3-xxlarge">
+					Early Warning System
+				</p>
+			</div>
+			<div class="image"></div>
+		</div>
+	</div>
+	<div class="w3-container w3-display-middle">
+		<table class="w3-cell-middle">
+				<tr>
+					<td colspan=2 style="padding-bottom:30px">
+						<h1><center>Admin Controls</center></h1>
+					</td>
+				</tr>
+			<tr>
+				<td style="padding-right:150px">
+					<form id="crawlFrm" id="auth-form">
+						<center><button class="btn success">Crawl</button></center>
+					</form>
+				</td>
+				<td>
+					<form id="scoreFrm" id="auth-form">
+						<center><button class="btn success">Score</button></center>
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span id="crawlMsg" style="display:none"><h3>Crawling Completed</h3></span>
+				</td>
+				<td>
+					<span id="scoreMsg" style="display:none"><h3>Scoring Completed</h3></span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="id01" class="w3-modal">
+		<div class="w3-modal-content" style="width:0px">
+			<div class="w3-container">
+				<img alt="TCS Logo" src="images/watson.gif">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

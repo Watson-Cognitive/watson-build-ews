@@ -23,6 +23,11 @@
 		totalPages: ''
 	});
 </script>
+<style>
+	.heading1 {
+		background-color: #9e4c4c;
+	} 
+</style>
 <body>
 	<div class="w3-container" style="background-color: #3993c0;">
 		<p class="w3-xlarge ">
@@ -30,23 +35,43 @@
 		</p>
 		<img alt="TCS Logo" src="images/tcs-logo.png" style="position: absolute;top: 0;right: 0;height: 84px;">
 	</div>
+	<br>
+	<center><h1 class="heading1">Connected Counterparty Details for <%=data.cp_name%></h1></center>
+	<br>
+	<div class="w3-container">
+		<table class="w3-table-all">
+			<tr>
+				<td>Counterparty Name: <b><%=data.cp_name%></b></td>
+				<td>Parent Name: <b><%=data.ult_parnt_name%></b></td>
+				<td>Current Sentiment Score: <b><%=data.ad_score%> %</b></td>
+				<td>Geography: <b><%=data.cdc_cntry_risk%></b></td>
+			</tr>
+		</table>
+	</div>
+	<br>
 	<div class="w3-container">
 	  <table class="w3-table-all">
 			<tr>
-			    <th>Counterparty</th>
-			    <th>Ultimate Parent Counter Party</th>
+			    <th>Connected Counterparty</th>
+			    <th>Ultimate Parent Name</th>
+			    <th>Nature of Relationship</th>
+			    <th>MTM Net  (Mn $)</th>
+			    <th>CVA</th>
 			    <th>News Analytics Score</th>
 			    <th>Last Refresh Time</th>
 			    <th>Credit Rating</th>
 			</tr>
-			<% if(data.length){ 
-			for(var i = 0;i < data.length;i++) { %>
+			<% if(data.ccpl.length){ 
+			for(var i = 0;i < data.ccpl.length;i++) { %>
 			<tr>
-				<td><a href="counterparty?cp_id=<%=data[i].CM_CP_ID%>"><%=data[i].CM_CP_NAME%></a></td>
-			    <td><%=data[i].CM_ULT_PARNT_NAME%></td>
-			    <td><%=data[i].AD_SCORE%></td>
-			    <td><%=data[i].AD_SCORE_UPDTIME%></td>
-			    <td><%=data[i].CM_CURRENT_RATING%></td>
+				<td><a href="counterpartydetails?cp_id=<%=data.ccpl[i].CM_CP_ID%>&cp_name=<%=data.ccpl[i].CM_CP_NAME%>&ult_parnt_name=<%=data.ccpl[i].CM_ULT_PARNT_NAME%>&ad_score=<%=data.ccpl[i].AD_SCORE%>"><%=data.ccpl[i].CM_CP_NAME%></a></td>
+			    <td><%=data.ccpl[i].CM_ULT_PARNT_NAME%></td>
+			    <td><%=data.ccpl[i].CM_NTR_RLTN%></td>
+			    <td><%=data.ccpl[i].CDC_MTM_NET%></td>
+			    <td><%=data.ccpl[i].CDC_CVA%></td>
+			    <td><%=data.ccpl[i].AD_SCORE%></td>
+			    <td><%=data.ccpl[i].AD_SCORE_UPDTIME%></td>
+			    <td><%=data.ccpl[i].CM_CURRENT_RATING%></td>
 			</tr>
 			<% }
 				}else{ %>

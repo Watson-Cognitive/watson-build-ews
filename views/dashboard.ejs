@@ -4,7 +4,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
-<script src="js/jquery-1.11.1.min.js"></script>
+<link href="stylesheets/paging.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="js/jquery.table.hpaging.min.js"></script>
+<script>
+    $(document).ready(function() { 
+		   $("table").hpaging({ 
+			"limit": 10 
+		  });
+	});
+
+	$("table").hpaging({ 
+		activePage: 1,
+		parentID: '',
+		navBar: null,
+		totalPages: ''
+	});
+</script>
 <body>
 	<div class="w3-container" style="background-color: #3993c0;">
 		<p class="w3-xlarge ">
@@ -12,28 +30,32 @@
 		</p>
 		<img alt="TCS Logo" src="images/tcs-logo.png" style="position: absolute;top: 0;right: 0;height: 84px;">
 	</div>
+	<br>
 	<div class="w3-container">
-	  <table class="w3-table-all">
-			<tr>
-			    <th>Counterparty</th>
-			    <th>Ultimate Parent Counter Party</th>
-			    <th>Bank Legal Entity</th>
-			    <th>MTM Net  (Mn $)</th>
-			    <th>CVA</th>
-			    <th>News Analytics Score</th>
-			    <th>Last Refresh Time</th>
-			    <th>Credit Rating</th>
-			</tr>
+		<table id="dashboardTable" class="w3-table-all">
+			<thead>
+				<tr>
+					<th>Counterparty</th>
+					<th>Ultimate Parent Counter Party</th>
+					<th>Bank Legal Entity</th>
+					<th>MTM Net  (Mn $)</th>
+					<th>CVA</th>
+					<th>News Analytics Score</th>
+					<th>Last Refresh Time</th>
+					<th>Credit Rating</th>
+				</tr>
+			</thead>
+			<tbody>
 			<% if(data.length){ 
 			for(var i = 0;i < data.length;i++) { %>
 			<tr>
-				<td><a href="#"><%=data[i].CM_CP_NAME%></a></td>
-			    <td><%=data[i].CM_ULTIMATE_PARENT_NAME%></td>
+				<td><a href="connectedcounterparty?cp_name=<%=data[i].CM_CP_NAME%>&cnctd_cp_id=<%=data[i].CM_CNCTD_CP_ID%>&ult_parnt_name=<%=data[i].CM_ULT_PARNT_NAME%>&ad_score=<%=data[i].AD_SCORE%>&cdc_cntry_risk=<%=data[i].CDC_CNTRY_RISK%>"><%=data[i].CM_CP_NAME%></a></td>
+			    <td><%=data[i].CM_ULT_PARNT_NAME%></td>
 			    <td><%=data[i].CDC_LEGAL_ENTITYTYPE%></td>
 			    <td><%=data[i].CDC_MTM_NET%></td>
 			    <td><%=data[i].CDC_CVA%></td>
 			    <td><%=data[i].AD_SCORE%></td>
-			    <td><%=data[i].AD_SCORE_UPDATETIME%></td>
+			    <td><%=data[i].AD_SCORE_UPDTIME%></td>
 			    <td><%=data[i].CM_CURRENT_RATING%></td>
 			</tr>
 			<% }
@@ -42,6 +64,7 @@
 				<td colspan="3">No Data</td>
 			</tr>
 			<% } %>
+			</tbody>
 		</table>
 	</div>
 
