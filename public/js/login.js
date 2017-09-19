@@ -3,11 +3,14 @@
 $(document).ready(function() { 
 	$("#auth-form").submit(function(){
 		var userName =  document.getElementById("username").value ;
-	    var pass =  document.getElementById("password").value ;
-	    localStorage.setItem("username", userName);
+		var pass =  document.getElementById("password").value ;
+		localStorage.setItem("username", userName);
 	    var auth = false;
-	    if(userName != "client1" && pass != "client1") auth = true;
-	    else if(userName != "client2" && pass != "client2") auth = true;
-	    if(!auth) return false;
+	    if(userName === "chris@MS.com" && pass === "MS@123"){
+			auth = true;
+		}else if(userName === "mark@CS.com" && pass === "CS@123"){
+			auth = true;
+		}
+	    
 	})
 });

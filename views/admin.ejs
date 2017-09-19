@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html >
+<html>
+<title>EWS</title>
 <head>
-  <meta charset="UTF-8">
-  <title>EWS</title>
-  	<link rel="stylesheet" href="stylesheets/login.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/admin.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+<link rel="stylesheet" href="css/reset.css" type="text/css" />
+<link rel="stylesheet" href="css/styles.css" type="text/css" />
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<script type="text/javascript" src="js/superfish.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="js/tablesorter/jquery-latest.js"></script> 
+<link rel="stylesheet" href="css/style_sort.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/jqcloud.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="js/admin.js"></script>
 	<style>
 		.btn {
 			border: none;
@@ -18,56 +25,107 @@
 		}
 		.success {background-color: #4CAF50;} /* Green */
 		.success:hover {background-color: #46a049;}
-	</style>
 
+		.glow {
+			text-align: center;
+			margin: 0px 0 0px 0;
+			font-size: 2em;
+			color: #228DFF;
+			font-family: Iceland;
+			-webkit-animation: neon2 1.5s ease-in-out infinite alternate;
+			-moz-animation: neon2 1.5s ease-in-out infinite alternate;
+			animation: neon2 1.5s ease-in-out infinite alternate;  
+		}
+
+
+		@keyframes neon2 {
+		from {
+			text-shadow: 0 0 10px #fff,
+			0 0 20px #fff,
+			0 0 30px #fff,
+			0 0 40px #228DFF,
+			0 0 70px #228DFF,
+			0 0 80px #228DFF,
+			0 0 100px #228DFF,
+			0 0 150px #228DFF;
+		}
+		to {
+			text-shadow: 0 0 5px #fff,
+			0 0 10px #fff,
+			0 0 15px #fff,
+			0 0 20px #228DFF,
+			0 0 35px #228DFF,
+			0 0 40px #228DFF,
+			0 0 50px #228DFF,
+			0 0 75px #228DFF;
+		}
+		}
+	
+	</style>
 </head>
 <body>
-	<div class="w3-container" style="background-color: #3993c0;">
-		<img alt="TCS Logo" src="images/tcs-logo.png" style="position: absolute;top: 0;right: 0;height: 86px;">
-		<div class="header">
-	    	<div class="w3-display-topmiddle w3-hide-small">
-	    		<p class="w3-xxlarge">
-					Early Warning System
-				</p>
+	<div id="container" class="width">
+		<header> 
+			<div class="width">
+				<h1><a href="/">Early Warning System <strong> by TCS</strong></a></h1>
+				<nav>
+					<ul class="sf-menu dropdown">
+						<li><a href="/"><i class="fa fa-sign-out"></i> Logout</a></li>
+					</ul>
+					<div class="clear"></div>
+				</nav>
 			</div>
-			<div class="image"></div>
+			<div class="clear"></div>
+		</header>
+		<div id="intro">
+			<div class="width">
+				<div class="intro-content">
+					<h2>Administrator Controls</h2>
+					<p></p>
+				</div>
+			</div>    
 		</div>
-	</div>
-	<div class="w3-container w3-display-middle">
-		<table class="w3-cell-middle">
-				<tr>
-					<td colspan=2 style="padding-bottom:30px">
-						<h1><center>Admin Controls</center></h1>
-					</td>
-				</tr>
-			<tr>
-				<td style="padding-right:150px">
-					<form id="crawlFrm" id="auth-form">
-						<center><button class="btn success">Crawl</button></center>
-					</form>
-				</td>
-				<td>
-					<form id="scoreFrm" id="auth-form">
-						<center><button class="btn success">Score</button></center>
-					</form>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span id="crawlMsg" style="display:none"><h3>Crawling Completed</h3></span>
-				</td>
-				<td>
-					<span id="scoreMsg" style="display:none"><h3>Scoring Completed</h3></span>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div id="id01" class="w3-modal">
-		<div class="w3-modal-content" style="width:0px">
-			<div class="w3-container">
-				<img alt="TCS Logo" src="images/watson.gif">
+		<div id="body" class="width">
+			<section id="content" class="single-column">
+				<div class="w3-container w3-display-middle">
+					<table>
+						<tr>
+							<td style="padding-right:150px;border-bottom:0px">
+								<form id="crawlFrm" id="auth-form">
+									<center><button class="btn success" type="submit">Crawl</button></center>
+								</form>
+							</td>
+							<td style="border-bottom:0px">
+								<form id="scoreFrm" id="auth-form">
+									<center><button class="btn success" type="submit">Score</button></center>
+								</form>
+							</td>
+						</tr>
+						<tr style="border-bottom:0px">
+							<td style="border-bottom:0px">
+								<span id="crawlMsg" class="glow" style="display:none"><h3>Crawling Completed</h3></span>
+							</td>
+							<td style="border-bottom:0px">
+								<span id="scoreMsg"  class="glow" style="display:none"><h3>Scoring Completed</h3></span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="id01" class="w3-modal">
+					<div class="w3-modal-content" style="width:500px;background-color: #fcfdf5">
+						<div class="w3-container">
+							<img alt="TCS Logo" src="images/watson.gif"><img style="padding-bottom:25px" alt="TCS Logo" src="images/processing.gif">
+						</div>
+					</div>
+				</div>
+			</section>
+			<div class="clear"></div>
+		</div>
+		<footer class="width">
+			<div class="footer-bottom">
+				<p>TCS 2017 <a href="http://tcs.com/">Early Warning System</a> by TCS</p>
 			</div>
-		</div>
+		</footer>
 	</div>
 </body>
 </html>
