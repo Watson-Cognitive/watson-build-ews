@@ -37,7 +37,7 @@
     <div id="container" class="width">
         <header> 
             <div class="width">
-                <h1><a href="/">Early Warning System <strong> by TCS</strong></a></h1>
+                <img style="padding-top: 7px" src="images/EWSLogo.png" />
                 <nav>
                     <ul class="sf-menu dropdown">
                         <li><a href="#" id="homeMenu"><i class="fa fa-home"></i>Home</a></li>
@@ -59,13 +59,13 @@
         </div>
         <div id="body" class="width">
             <section id="content" class="single-column">
-                <table style="background: #00a6eb;font-weight: bold;color: black;font-size: 15px;">
+                <table style="background: #fbf4ae;color: black;font-size: 15px;">
                     <tr>
                         <td style="text-align: end;">Counterparty Name:</td>
                         <td><b><%=data.cp_name%></b></td>
                         <td style="text-align: end;">Parent Name:</b></td>
                         <td><%=data.ult_parnt_name%></td>
-                        <td style="text-align: end;">Current Sentiment Score:</td>
+                        <td style="text-align: end;">News Analytics Score:</td>
                         <td><b><%=data.ad_score%> %</b></td>
                         <td style="text-align: end;">Geography:</td>
                         <td><b><%=data.cod[0].CDC_CNTRY_RISK%></b></td>
@@ -100,16 +100,16 @@
                     <thead>                            
                         <tr>                               
                             <th>Legal Entity</th>
-                            <th>Product</th>
+                            <th style="width:12%">Product</th>
                             <th>Deal Count</th>
                             <th>Exposure Type</th>
                             <th>Measure</th>
                             <th>Time Band</th>
-                            <th>Limit(mn $)</th>
+                            <th>Limit Available (mn $)</th>
                             <th>Exposure (mn $)</th>
-                            <th>Availabe</th>
-                            <th style="width: 10%;">Limit Expiry</th>
-                            <th>Tenor</th>
+                            <th style="width:7%">Availabe (mn $)</th>
+                            <th style="width: 13%;">Limit Expiry</th>
+                            <th>Tenor Limit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,13 +118,13 @@
                         <tr>
                             <td><%=data.pdl[i].CDC_LEGAL_ENTITYTYPE%></td>
                             <td><%=data.pdl[i].CDC_PRODUCTS%></td>
-                            <td><%=data.pdl[i].CDC_DEAL_COUNT%></td>
+                            <td style="text-align:right"><%=data.pdl[i].CDC_DEAL_COUNT%></td>
                             <td><%=data.pdl[i].CDC_EXP_TYPE%></td>
                             <td><%=data.pdl[i].CDC_MEASURE%></td>
                             <td><%=data.pdl[i].CDC_TIME_BAND%></td>
-                            <td><%=data.pdl[i].CDC_LIMIT%></td>
-                            <td><%=data.pdl[i].CDC_EXPOSURE%></td>
-                            <td><%=data.pdl[i].CDC_AVAILABLE%></td>
+                            <td style="text-align:right"><%=data.pdl[i].CDC_LIMIT%></td>
+                            <td style="text-align:right"><%=data.pdl[i].CDC_EXPOSURE%></td>
+                            <td style="text-align:right"><%=data.pdl[i].CDC_AVAILABLE%></td>
                             <td><%=data.pdl[i].CDC_LIMIT_EXP%></td>
                             <td><%=data.pdl[i].CDC_TENOR%></td>
                         </tr>
@@ -157,8 +157,8 @@
                 <% } %>
             </section>
             <aside class="sidebar big-sidebar right-sidebar" style="padding-top:7px">
-                <div style="background-color: aliceblue;">
-                    <center style="padding-bottom: 14px;"><span class="my-h4">Counterparty Details</span></center>
+                <div style="background-color: #fbf4ae;color: black">
+                    <center style="padding-bottom: 29px;background-color:white"><span class="my-h4">Counterparty Details</span></center>
                     <table>
                         <% if(data.cod && data.cod.length){ %>
                             <tr>
@@ -170,11 +170,11 @@
                                 <td><%=data.cod[0].CM_CP_ID%></td>
                             </tr>
                             <tr>
-                                <td>Alternate Parent Name:</td>
+                                <td>Ultimate Parent Name:</td>
                                 <td><%=data.cod[0].CM_ULT_PARNT_NAME%></td>
                             </tr>
                             <tr>
-                                <td>Alternate Parent ID:</td>
+                                <td>Ultimate Parent ID:</td>
                                 <td><%=data.cod[0].CM_ULT_PARENT_ID%></td>
                             </tr>
                             <tr>

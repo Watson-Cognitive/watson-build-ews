@@ -25,7 +25,7 @@
   <div id="container" class="width">
     <header> 
       <div class="width">
-        <h1><a href="/">Early Warning System <strong> by TCS</strong></a></h1>
+        <img style="padding-top: 7px" src="images/EWSLogo.png" />
         <nav>
           <ul class="sf-menu dropdown">
             <li><a href="#" id="homeMenu"><i class="fa fa-home"></i>Home</a></li>
@@ -38,21 +38,23 @@
       <div class="clear"></div>
     </header>
     <div id="body" class="width" style="min-height: 580px;">
-      
+        <div style="top: 12%;left: 7%;position: absolute;">
+            <img style="margin:-15px;" width="550px;" height="700px;" src="/images/new.gif" />
+        </div>
         <div class="responsive-columns-wrapper" style="height: 550px;">
           <div id="chatMainColumn" style="left: 35%;position: relative;">
-            <div class="chat-column">
+            <div class="chat-column" style="background-color : #6f7784;">
               <div id="scrollingChat"></div>
               <div>
-                <table class="w3-table">
+                <table class="w3-table" style="table-layout:fixed; overflow:hidden; white-space: nowrap;">
                   <col width="15%" />
                   <col width="85%" />
                   <tr>
                     <td><img id="micButton" class="micButton" src="images/chat/mic_small.png" alt="Mic" style="width:100%"></td>
                     <td>
-                      <label for="textInput" class="inputOutline">
-                        <input id="textInput" class="input responsive-column"
-                          placeholder="Click on mic to speak or type" type="text"
+                      <label for="textInput" class="inputOutline" >
+                        <input id="textInput" class="input responsive-column" style="color: #ff0000;"
+                          placeholder="Click on mic to speak or type" type="text" 
                           onkeydown="ConversationPanel.inputKeyDown(event, this)">
                       </label>
                     </td>
@@ -69,14 +71,15 @@
             <div id="payload-response" class="payload"></div>
           </div>
         </div>
-        <div style="top: 12%;right: 4%;position: absolute;max-width: 26%;">
-            <h4>Frequently Asked Questions</h4>
+        <div style="top: 9%;right: 8%;position: absolute;max-width: 23%;">
+			
+            <div class="faq-heading" style="text-align : center;">Frequently Asked Questions </div>
             <ul class="listStyle" style="list-style-type: none;padding:0;margin:0">
-              <li style="cursor: pointer"><span class="t">What is the business definition for CNA score ?</span></li>
-              <li style="cursor: pointer"><span class="t">What are the senior management daily and intraday reports available for counterparty risk management and their availability time ?</span></li>
-              <li style="cursor: pointer"><span class="t">What are the criteria’s of connected counterparties as per Basel committee ?</span></li>
-              <li style="cursor: pointer"><span class="t">What is the frequency of reviewing and updating connected counterparty list master ?</span></li>
-              <li style="cursor: pointer"><span class="t">What are the comparable rating symbols for junk category bonds for S&P, Fitch and Moody’s ?</span></li>
+              <div class="faq-elements" ><li style="cursor: pointer"><span class="t">What is the business definition for CNA score ?</span></li></div>
+              <div class="faq-elements" ><li style="cursor: pointer"><span class="t">What are the senior management daily and intraday reports available for counterparty risk management and their availability time ?</span></li></div>
+              <div class="faq-elements" ><li style="cursor: pointer"><span class="t">What are the criteria’s of connected counterparties as per Basel committee ?</span></li></div>
+              <div class="faq-elements" ><li style="cursor: pointer"><span class="t">What is the frequency of reviewing and updating connected counterparty list master ?</span></li></div>
+              <div class="faq-elements" ><li style="cursor: pointer"><span class="t">What are the comparable rating symbols for junk category bonds for S&P, Fitch and Moody’s ?</span></li></div>
             </ul>
         </div>
         <div class="clear"></div>

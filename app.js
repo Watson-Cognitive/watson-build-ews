@@ -20,15 +20,16 @@ var pagesVisited = {};
 var pagesToVisit = [];
 var url = " ";
 var baseUrl = " ";
-var SEARCH_WORD =" ";
+ var news_header=" ";
+ var SEARCH_WORD =" ";
 var START_URL=" ";
-var CP_ID =" ";
+var CRAWL_CP_ID =" ";
 var DOMAIN_NAME=" ";
+		  
 var max_seq_no=" ";
-var client_id =  "";
-var login_client = "";
 var param = new Object();
-var news_header = " ";
+
+//var detected_language=" ";
 var news_body=" ";
 
 //Scoring Logic
@@ -37,18 +38,28 @@ app.set("json spaces", 2);
 app.set("json replacer", null);
 var Promise = require('promise');
 
+//Discovery
+var DiscoveryV1 = require('watson-developer-cloud/discovery/v1');
+var discovery1 = new DiscoveryV1({
+	username: '6fc767dc-0ae5-4543-b997-7b89f806fee5',
+	password: 'lFieDVyaZJNe',
+	version_date: '2016-12-01'
+});
 
-var dashboard_query = "SELECT distinct CM.CM_CP_ID, (CDC_CNTRY_RISK) AS CDC_CNTRY_RISK, CM.CM_CNCTD_CP_ID, CM.CM_CP_NAME, CM.CM_ULT_PARNT_NAME,    CDC_LEGAL_ENTITYTYPE AS CDC_LEGAL_ENTITYTYPE, CDC_MTM_NET AS CDC_MTM_NET,    CDC_CVA  AS CDC_CVA,  AD_SCORE AS AD_SCORE, AD_SCORE_UPDTIME AS AD_SCORE_UPDTIME, CM.CM_CURRENT_RATING   FROM COUNTERPARTY_MASTER CM,DETAILS_FROM_CLIENT,ANALYTICAL_DETAILS,TRACKING_TABLE  WHERE CM.CM_CP_ID = TT_COUNTERPARTY_ID  and TT_CLIENT_ID = ?  and CDC_CLIENT_ID=TT_CLIENT_ID  AND CDC_CP_ID = CM.CM_CP_ID    AND TT_TRACKING_STATUS = 'Y'    AND  CM.CM_CP_ID=AD_COUNTERPARTY_ID  ORDER BY AD_SCORE DESC";
-var newsonly_query = "SELECT distinct CM.CM_CNCTD_CP_ID,CM.CM_CP_NAME,CM.CM_ULT_PARNT_NAME,AD_SCORE,AD_SCORE_UPDTIME,CM.CM_CURRENT_RATING FROM COUNTERPARTY_MASTER CM,DETAILS_FROM_CLIENT,ANALYTICAL_DETAILS,TRACKING_TABLE WHERE CM.CM_CP_ID = TT_COUNTERPARTY_ID and TT_CLIENT_ID = ? and CDC_CLIENT_ID=TT_CLIENT_ID AND CDC_CP_ID = CM.CM_CP_ID  AND TT_TRACKING_STATUS = 'Y'  AND CM.CM_CP_ID=AD_COUNTERPARTY_ID ORDER BY AD_SCORE DESC";
-var counterparty_query = "SELECT distinct CM.CM_CNCTD_CP_ID, CM.CM_CP_ID, CM.CM_CP_NAME, CM.CM_ULT_PARNT_NAME, CM.CM_NTR_RLTN, CDC.CDC_LEGAL_ENTITYTYPE, CDC.CDC_MTM_NET, CDC.CDC_CVA, AD.AD_SCORE, AD.AD_SCORE_UPDTIME, CM.CM_CURRENT_RATING   FROM COUNTERPARTY_MASTER CM   JOIN DETAILS_FROM_CLIENT CDC ON(CM.CM_CP_ID = CDC.CDC_CP_ID)   JOIN ANALYTICAL_DETAILS AD ON(AD.AD_COUNTERPARTY_ID = CM.CM_CP_ID )  WHERE CM_NTR_RLTN != 'Self' AND CM.CM_CNCTD_CP_ID = ? ORDER BY AD_SCORE DESC";
-var portfoliodetails_query = "SELECT DISTINCT CDC_LEGAL_ENTITYTYPE, CDC_PRODUCTS, CDC_DEAL_COUNT, CDC_EXP_TYPE, CDC_MEASURE, CDC_TIME_BAND, CDC_LIMIT, CDC_EXPOSURE, CDC_AVAILABLE, CDC_LIMIT_EXP, CDC_TENOR   FROM DETAILS_FROM_CLIENT  WHERE CDC_CP_ID  = ?";
+
+var dashboard_query = "SELECT distinct CM.CM_CP_ID, (CDC_CNTRY_RISK) AS CDC_CNTRY_RISK, CM.CM_CNCTD_CP_ID, CM.CM_CP_NAME, CM.CM_ULT_PARNT_NAME,    CDC_LEGAL_ENTITYTYPE AS CDC_LEGAL_ENTITYTYPE, CDC_MTM_NET AS CDC_MTM_NET,    CDC_CVA  AS CDC_CVA,  AD_SCORE AS AD_SCORE, AD_SCORE_UPDTIME AS AD_SCORE_UPDTIME, CM.CM_CURRENT_RATING,AD_PROBABILITY   FROM COUNTERPARTY_MASTER CM,DETAILS_FROM_CLIENT,ANALYTICAL_DETAILS,TRACKING_TABLE  WHERE CM.CM_CP_ID = TT_COUNTERPARTY_ID  and TT_CLIENT_ID = ?  and CDC_CLIENT_ID=TT_CLIENT_ID  AND CDC_CP_ID = CM.CM_CP_ID    AND TT_TRACKING_STATUS = 'Y'    AND  CM.CM_CP_ID=AD_COUNTERPARTY_ID  ORDER BY AD_SCORE DESC";
+var newsonly_query = "SELECT distinct CM.CM_CP_ID,CM.CM_CNCTD_CP_ID,CM.CM_CP_NAME,CM.CM_ULT_PARNT_NAME,AD_SCORE,AD_SCORE_UPDTIME,CM.CM_CURRENT_RATING,AD_PROBABILITY FROM COUNTERPARTY_MASTER CM,DETAILS_FROM_CLIENT,ANALYTICAL_DETAILS,TRACKING_TABLE WHERE CM.CM_CP_ID = TT_COUNTERPARTY_ID and TT_CLIENT_ID = ? and CDC_CLIENT_ID=TT_CLIENT_ID AND CDC_CP_ID = CM.CM_CP_ID  AND TT_TRACKING_STATUS = 'Y'  AND CM.CM_CP_ID=AD_COUNTERPARTY_ID ORDER BY AD_SCORE DESC";
+var counterparty_query = "SELECT distinct CM.CM_CNCTD_CP_ID, CM.CM_CP_ID, CM.CM_CP_NAME, CM.CM_ULT_PARNT_NAME, CM.CM_NTR_RLTN, CDC.CDC_LEGAL_ENTITYTYPE, CDC.CDC_MTM_NET, CDC.CDC_CVA, AD.AD_SCORE, AD.AD_SCORE_UPDTIME, CM.CM_CURRENT_RATING   FROM COUNTERPARTY_MASTER CM   JOIN DETAILS_FROM_CLIENT CDC ON(CM.CM_CP_ID = CDC.CDC_CP_ID)   JOIN ANALYTICAL_DETAILS AD ON(AD.AD_COUNTERPARTY_ID = CM.CM_CP_ID )  WHERE CM.CM_CNCTD_CP_ID = ? ORDER BY AD_SCORE DESC";
+var portfoliodetails_query = "SELECT DISTINCT CDC_LEGAL_ENTITYTYPE, CDC_PRODUCTS, cast(CDC_DEAL_COUNT as INTEGER) as CDC_DEAL_COUNT, CDC_EXP_TYPE, CDC_MEASURE, CDC_TIME_BAND, CDC_LIMIT, CDC_EXPOSURE, CDC_AVAILABLE, CDC_LIMIT_EXP, CDC_TENOR   FROM DETAILS_FROM_CLIENT  WHERE CDC_CP_ID  = ?";
 var counterpartyother_query = "SELECT distinct CM.CM_CP_NAME, CM.CM_CP_ID, CM.CM_ULT_PARNT_NAME, CM.CM_ULT_PARENT_ID, CM.CM_CURRENT_RATING, CLM.CLM_RISK_OFFICER, CDC.CDC_INT_RATING, CDC.CDC_CNTRY_RISK, CDC.CDC_CNTRY_DMCILE   FROM COUNTERPARTY_MASTER CM   JOIN DETAILS_FROM_CLIENT CDC ON (CDC.CDC_CP_ID = CM.CM_CP_ID)   JOIN CLIENT_MASTER CLM ON (CLM.CLM_CLIENT_ID = CDC.CDC_CLIENT_ID)  WHERE CM.CM_CP_ID = ?"
-var analyticsMainSourcs_query = "SELECT NS_DOMAIN_NAME, 'News' as \"Type\",  NS_GEOGRAPHY,  NS_NUMBER_ARTICLES AS NR_SCORE,  NS_SCORE,  sysdate AS NR_CAPTURE_DTTIME    FROM NEWS_SOURCE_MASTER   WHERE NS_CP_ID = ?";
-var analyticsNewsHeader_query = "SELECT NR_NEWS_HEADER,NR_PBLSH_DTTIME FROM NEWS_REPOSITORY WHERE NR_COUNTERPARTY_ID = ?";
+var analyticsMainSourcs_query = "SELECT NS_DOMAIN_NAME, 'News' as \"Type\",  NS_GEOGRAPHY,  NS_NUMBER_ARTICLES AS NR_SCORE,  NS_SCORE,  sysdate AS NR_CAPTURE_DTTIME    FROM NEWS_SOURCE_MASTER   WHERE NS_CP_ID = ? ORDER BY NS_SCORE DESC";
+var analyticsNewsHeader_query = "SELECT NR_NEWS_HEADER,sysdate as NR_PBLSH_DTTIME FROM NEWS_REPOSITORY WHERE NR_COUNTERPARTY_ID = ?";
 var tagcloud_query = "select text,weight,orientation from tag_cloud where CP_ID = ?";
-var newsLinks_Query = "SELECT NR_NEWS_HEADER, NR_SCORE, NR_PBLSH_DTTIME, NR_CAPTURE_DTTIME, 'Risk Officer 1' AS CLM_RISK_OFFICER   FROM NEWS_REPOSITORY NR  WHERE NR_COUNTERPARTY_ID = ?    AND NR_NEWS_SOURCE = ?";
+var newsLinks_Query = "SELECT NR_NEWS_URL,NR_NEWS_HEADER, NR_SCORE, NR_PBLSH_DTTIME, NR_CAPTURE_DTTIME, DECODE(SIGN(NR_SCORE-80),1,'Ben Osmow',' ') AS CLM_RISK_OFFICER FROM NEWS_REPOSITORY NR WHERE NR_COUNTERPARTY_ID =? AND NR_NEWS_SOURCE = ?";
 var barChart_Query = "SELECT date,sentimentScore,creditScore FROM BAR_CHART WHERE CP_ID = 'CIDFNP'";
 var sentiChart_Query = "SELECT positive,negative,neutral FROM SENTIMENT_CHART WHERE CP_ID = 'CIDFNP'";
+var enquireChat_Query = "SELECT distinct CDC_MTM_NET AS CDC_MTM_NET, AD_SCORE AS AD_SCORE FROM COUNTERPARTY_MASTER CM,DETAILS_FROM_CLIENT,ANALYTICAL_DETAILS AD, TRACKING_TABLE TT  WHERE CM.CM_CP_ID = ?  and TT_CLIENT_ID = ?  and CDC_CLIENT_ID=TT_CLIENT_ID  AND CDC_CP_ID = CM.CM_CP_ID    AND TT_TRACKING_STATUS = 'Y'    AND  CM.CM_CP_ID=AD_COUNTERPARTY_ID  ORDER BY AD_SCORE DESC";
+var connectedCounterpartyChat_Query = "SELECT distinct CM.CM_CP_NAME FROM COUNTERPARTY_MASTER CM  WHERE CM.CM_CNCTD_CP_ID = (SELECT CM_CNCTD_CP_ID FROM COUNTERPARTY_MASTER WHERE CM_CP_ID = 'CIDGOPRO') AND CM_NTR_RLTN != 'Self'";
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
@@ -476,7 +487,8 @@ var nlu = new NaturalLanguageUnderstandingV1({
   version_date: "2017-02-27"
 });
 
-app.post("/score", (req, res, next) => {	console.log("*************** Received 1 " + req.url);
+app.post('/score', function(req, res) {
+	console.log("*************** Received 1 " + req.url);
 
   console.log("*************** Received 2 " + req.body.model_id);
   console.log("Calling function nr_scoring");
@@ -501,7 +513,9 @@ app.post("/score", (req, res, next) => {	console.log("*************** Received 1
 	  
 Promise.all(promises).then(function(resp){  		cp_ns_scoring();
 	});
+	console.log("In the function that doe shit");
 setTimeout(function(){
+	console.log("Returning the values");
 	res.status(200).send('OK');
 }, 8000);
 });
@@ -689,28 +703,29 @@ app.post('/crawl', function(req, res) {
 	
 	for (var j=0;j<crawl_data.length;j++)
 	{
+				 
 		(function(j) {
-			SEARCH_WORD = crawl_data[j].CM_CP_NAME;
-		  //SEARCH_WORD='IE';
-		   START_URL = crawl_data[j].NS_DOMAIN_URL;
+			 SEARCH_WORD = crawl_data[j].CM_CP_NAME;
+					   //SEARCH_WORD='IE';
+			START_URL = crawl_data[j].NS_DOMAIN_URL;
 		  //START_URL='https://www.ie.edu/landings/bs-masters-en-gestion-esp/?gclid=CjwKCAjw9O3NBRB3EiwAK6wPT3wMZFsNveNUFe8To4dFtTCHk13koNPCKx6JMiZOr0lGEsxfXkJmQhoCYNUQAvD_BwE';
-		   CP_ID=crawl_data[j].CM_CP_ID;
-		   DOMAIN_NAME=crawl_data[j].NS_DOMAIN_NAME;
-		  news_header=crawl_data[j].NS_NEWS_HEADER_TEMP;
-		   param.numPagesVisited = 0;
+			CRAWL_CP_ID=crawl_data[j].CM_CP_ID;
+			DOMAIN_NAME=crawl_data[j].NS_DOMAIN_NAME;
+			  news_header=crawl_data[j].NS_NEWS_HEADER_TEMP;
+			  param.numPagesVisited = 0;
 		   console.log("Searching for ", crawl_data[j].CM_CP_NAME,"on ", START_URL= crawl_data[j].NS_DOMAIN_URL, "CP ID : ", crawl_data[j].CM_CP_ID);
 		  pagesVisited = {};
 		  pagesToVisit = [];
 		   url = new URL(START_URL);
 		   baseUrl = url.protocol + "//" + url.hostname;
 		   pagesToVisit.push(START_URL);
-		   crawl(SEARCH_WORD, CP_ID, DOMAIN_NAME);
+		   crawl(SEARCH_WORD, CRAWL_CP_ID, DOMAIN_NAME,news_header);
 		})(j);
 	}
 	  console.log("Crawler ran successfully.");
 
 
-function visitPage(url, SEARCH_WORD, CP_ID, DOMAIN_NAME, callback) {
+function visitPage(url, SEARCH_WORD, CP_ID, DOMAIN_NAME,news_header,callback) {
 // Add page to our set
 pagesVisited[url] = true;
 param.numPagesVisited++;
@@ -726,7 +741,7 @@ request(url, function(error, response, body) {
 	 
 	 try
 	 {
-			callback(SEARCH_WORD, CP_ID, DOMAIN_NAME);
+			callback(SEARCH_WORD, CP_ID, DOMAIN_NAME,news_header);
 	 return;  
 	 }catch (e)
 		{
@@ -776,7 +791,7 @@ request(url, function(error, response, body) {
 });
 }
 
-function crawl(SEARCH_WORD, CP_ID, DOMAIN_NAME) {
+function crawl(SEARCH_WORD, CP_ID, DOMAIN_NAME,news_header) {
 if(param.numPagesVisited >= MAX_PAGES_TO_VISIT) {
   console.log("Reached max limit of number of pages to visit.");
   return;
@@ -784,10 +799,10 @@ if(param.numPagesVisited >= MAX_PAGES_TO_VISIT) {
 var nextPage = pagesToVisit.pop();
 if (nextPage in pagesVisited) {
   // We've already visited this page, so repeat the crawl
-  crawl(SEARCH_WORD, CP_ID, DOMAIN_NAME);
+  crawl(SEARCH_WORD, CP_ID, DOMAIN_NAME,news_header);
 } else {
   // New page we haven't visited
-  visitPage(nextPage, SEARCH_WORD, CP_ID, DOMAIN_NAME, crawl);
+  visitPage(nextPage, SEARCH_WORD, CP_ID, DOMAIN_NAME,news_header, crawl);
 }
 }
 
@@ -880,8 +895,9 @@ return str.replace(/(?!\w|\s)./g, '')
   .replace(/^(\s*)([\W\w]*)(\b\s*$)/g, '$2');
 }
 setTimeout(function(){
-    res.status(200).send('OK');
-}, 15000);
+	res.status(200).send('OK');
+	//score(req,res);
+}, 35000);
 });
 
 //DB2 Connection
@@ -937,10 +953,123 @@ app.post('/api/message', function(req, res) {
 	  if (err) {
 		return res.status(err.code || 500).json(err);
 	  }
-	  return res.json(updateMessage(payload, data));
+	  else if(data.context.news == true) // set depending on response
+	  {
+			data.context.news = false;
+		  var querydata = data.context.company ; // based on response
+		  discovery1.query({
+						environment_id: '0d322587-8eb3-4650-bfbf-8c39f4bcc63b',
+						collection_id : '9e385ba7-973f-43f1-96ec-074de0299949',
+						  "count": 1,
+						  "return": "title,enrichedTitle.concepts.text,enrichedTitle.keywords.text,enrichedTitle.text,url,host,blekko.chrondate",
+						  "query": querydata +",language:english",
+							
+						  "aggregations": [
+							"nested(enrichedTitle.entities).filter(enrichedTitle.entities.type:Company).term(enrichedTitle.entities.text)",
+							"nested(enrichedTitle.entities).filter(enrichedTitle.entities.type:Person).term(enrichedTitle.entities.text)",
+							"term(enrichedTitle.concepts.text)",
+							"term(blekko.basedomain).term(docSentiment.type::positive)",
+							"term(docSentiment.type::positive)",
+							"min(docSentiment.score)",
+							"max(docSentiment.score)",
+							"filter(enrichedTitle.entities.type::Company).term(enrichedTitle.entities.text).timeslice(blekko.chrondate,1day).term(docSentiment.type::positive)",
+
+						  ],
+						  "filter": "blekko.hostrank>20,blekko.chrondate>1500316200,blekko.chrondate<1500921000"
+
+					}, function(error, newsdata) {
+						if(error)
+							return res.json(updateMessage(payload, error));
+						else {
+									var newdata = { url : "" , text : ""};
+								if(newdata.url != undefined && newdata.text != undefined && newsdata.results[0].enrichedTitle != undefined && newsdata.results[0].enrichedTitle.text != undefined){
+									newdata.url = newsdata.results[0].url;	
+									newdata.text = newsdata.results[0].enrichedTitle.text ;
+									//console.log(newdata);
+									data.output.text = "";
+									data.output.text = newsdata.results[0].enrichedTitle.text +"\n"+ newsdata.results[0].url;
+									data.context.news = false;
+								}else{
+									data.output.text = "I am sorry. I am not able to fetch any news related to your query. Please try again later."
+									data.context.news = false;
+								}
+							  return res.json(updateMessage(payload, data));
+						}
+					});
+	  }else if(data.context.enquire == true) // set depending on response
+	  {		
+			data.context.enquire = false;
+			var querydata = data.context.counterparty ; // based on response
+			var company = data.context.company;
+			var queryArg = [];
+			queryArg.push(querydata);
+			queryArg.push('CLID1');
+			console.log("In the pqrt to fetch enquire" + querydata);
+			ibmdb.open(connString, function(err, conn) {
+				if (err ) {
+					return res.json(updateMessage(payload, err));
+				}
+				else{
+					conn.query(enquireChat_Query,queryArg,function(err, rows) {
+						if ( !err ) {
+							if(rows.length == 0){
+								data.output.text = "I am sorry. Please try again later."
+								console.log("There are NO values");
+							}else{
+								var opt;
+								opt = "MTM Net(MN $) : " + rows[0].CDC_MTM_NET + " </br> CNA Score : " + rows[0].AD_SCORE + " </br> for the counterparty " + company;
+								data.output.text = "";
+								data.output.text = opt;
+							}
+							return res.json(updateMessage(payload, data));
+						}else{
+							return res.json(updateMessage(payload, err));
+						}
+					});
+				}
+			});
+	  }else if(data.context.connected == true) // set depending on response
+	  {
+			data.context.connected = false;
+			var querydata = data.context.counterparty ; // based on response
+			var company = data.context.company;
+			var queryArg = [];
+			queryArg.push(querydata);
+			ibmdb.open(connString, function(err, conn) {
+				if (err ) {
+					return res.json(updateMessage(payload, err));
+				}
+				else{
+					conn.query(connectedCounterpartyChat_Query,queryArg,function(err, rows) {
+						if ( !err ) {
+							if(rows.length == 0){
+								data.output.text = "I am sorry. Please try again later."
+								console.log("There are NO values");
+							}else{
+								var opt;
+								opt = "The Connected counterparties for " + company + " are:";
+								for(i = 0;i<rows.length;i++){
+									var name = rows[i].CM_CP_NAME;
+									opt = opt + "</br>" + name;
+								}
+								data.output.text = "";
+								data.output.text = opt;
+							}
+							return res.json(updateMessage(payload, data));
+						}else{
+							return res.json(updateMessage(payload, err));
+						}
+					});
+				}
+			});
+	  }
+	  else {
+			console.log("Just printing the cotext " + data.context.enquire);
+			return res.json(updateMessage(payload, data));
+		}
 	});
   });
-  
+   
   /**
    * Updates the response text using the intent confidence
    * @param  {Object} input The request to the Conversation service
@@ -948,6 +1077,8 @@ app.post('/api/message', function(req, res) {
    * @return {Object}          The response with the updated message
    */
   function updateMessage(input, response) {
+	//console.log("input",input);
+	console.log("response",response);
 	var responseText = null;
 	if (!response.output) {
 	  response.output = {};

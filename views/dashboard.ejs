@@ -30,7 +30,7 @@
 	<div id="container" class="width">
 		<header> 
 			<div class="width">
-				<h1><a href="/">Early Warning System <strong> by TCS</strong></a></h1>
+				<img style="padding-top: 7px" src="images/EWSLogo.png" />
 				<nav>
 					<ul class="sf-menu dropdown">
 						<li class="selected"><a href="#" id="homeMenu"><i class="fa fa-home"></i>Home</a></li>
@@ -58,9 +58,10 @@
 							<th>Counterparty</th>
 							<th>Ultimate Parent Counter Party</th>
 							<th>Bank Legal Entity</th>
-							<th style="width:11%">MTM Net(Mn $)</th>
+							<th style="width:7%">MTM Net(Mn $)</th>
 							<th>CVA</th>
-							<th style="width:11%">News Analytics Score</th>
+							<th style="width:7%">News Analytics Score</th>
+							<th style="width:7%">Predicted Probability</th>
 							<th>Credit Rating</th>
 							<th>Last Refresh Time</th>
 						</tr>
@@ -72,17 +73,18 @@
 							<td><a href="connectedcounterparty?cp_name=<%=data[i].CM_CP_NAME%>&cnctd_cp_id=<%=data[i].CM_CNCTD_CP_ID%>&ult_parnt_name=<%=data[i].CM_ULT_PARNT_NAME%>&ad_score=<%=data[i].AD_SCORE%>&cdc_cntry_risk=<%=data[i].CDC_CNTRY_RISK%>"><%=data[i].CM_CP_NAME%></a></td>
 							<td><%=data[i].CM_ULT_PARNT_NAME%></td>
 							<td><%=data[i].CDC_LEGAL_ENTITYTYPE%></td>
-							<td><%=data[i].CDC_MTM_NET%></td>
-							<td><%=data[i].CDC_CVA%></td>
+							<td style="text-align:right"><%=data[i].CDC_MTM_NET%></td>
+							<td style="text-align:right"><%=data[i].CDC_CVA%></td>
 							<%if(data[i].AD_SCORE <= 40 ) {%>
-								<td style="background-color: green;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: white;"><%=data[i].AD_SCORE%></span></a></td>
+								<td style="text-align:right;background-color: green;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: white;"><%=data[i].AD_SCORE%></span></a></td>
 							<%}else if(data[i].AD_SCORE > 40 && data[i].AD_SCORE < 70) {%>
-								<td style="background-color: yellow;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: black;"><%=data[i].AD_SCORE%></span></a></td>
+								<td style="text-align:right;background-color: yellow;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: black;"><%=data[i].AD_SCORE%></span></a></td>
 							<%}else if(data[i].AD_SCORE >= 70 && data[i].AD_SCORE < 80) {%>
-								<td style="background-color: orange;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: black;"><%=data[i].AD_SCORE%></span></a></td>
+								<td style="text-align:right;background-color: orange;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: black;"><%=data[i].AD_SCORE%></span></a></td>
 							<%}else{%>
-								<td style="background-color: red;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: white;"><%=data[i].AD_SCORE%></span></a></td>
+								<td style="text-align:right;background-color: red;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: white;"><%=data[i].AD_SCORE%></span></a></td>
 							<%}%>
+							<td style="text-align:right"><%=data[i].AD_PROBABILITY%></td>
 							<td><%=data[i].CM_CURRENT_RATING%></td>
 							<td><%=data[i].AD_SCORE_UPDTIME%></td>
 						</tr>
@@ -98,13 +100,16 @@
 					<table style="width:215px;float:right;font-size: 12px">
 						<tr>
 							<td>
-								<div class="foo green"></div>0 - 69
+								<div class="foo green"></div>Low Risk
 							</td>
 							<td>
-								<div class="foo yellow"></div> 70 - 79 
+								<div class="foo yellow"></div>Caution
 							</td>
 							<td>
-								<div class="foo red"></div> 80 - 100
+								<div class="foo orange"></div>Alarming
+							</td>
+							<td>
+								<div class="foo red"></div>Extremely Alarming
 							</td>
 						</tr>
 					</table>

@@ -6,7 +6,7 @@ var chart = function (chartData) {
   "precision": 2,
   "valueAxes": [{
     "id": "v1",
-    "title": "Credit Risk Score / Sentiment Score", //change
+    "title": "Internal Rating / CNA Score", //change
     "position": "left",
     "autoGridCount": false,
     "labelFunction": function(value) {
@@ -14,7 +14,7 @@ var chart = function (chartData) {
     }
   }, {
     "id": "v2",
-    "title": "Sentiment Score", //change
+    "title": "CNA Score", //change
     "gridAlpha": 0,
     "position": "right",
     "autoGridCount": false
@@ -26,7 +26,7 @@ var chart = function (chartData) {
     "fillColors": "#62cf73",
     "fillAlphas": 1,
     "type": "column",
-    "title": "Credit Risk Score",//change
+    "title": "Internal Rating",//change
     "valueField": "creditscore",////u can replace market1 with ur data data2
     "clustered": false,
     "columnWidth": 5,
@@ -43,7 +43,7 @@ var chart = function (chartData) {
     "lineThickness": 2,
     "lineColor": "#20acd4",
     "type": "smoothedLine",
-    "title": "Sentiment Score", //change
+    "title": "CNA Score", //change
     "useLineColorForBulletBorder": true,
     "valueField": "sentimentscore", //u can replace market1 with ur data data1
     "balloonText": "[[title]]<br /><b style='font-size: 130%'>[[value]]</b>"

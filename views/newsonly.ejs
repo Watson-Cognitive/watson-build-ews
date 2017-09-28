@@ -38,7 +38,7 @@
 	<div id="container" class="width">
 		<header> 
 			<div class="width">
-				<h1><a href="/">Early Warning System <strong> by TCS</strong></a></h1>
+				<img style="padding-top: 7px" src="images/EWSLogo.png" />
 				<nav>
 					<ul class="sf-menu dropdown">
 						<li><a href="#" id="homeMenu"><i class="fa fa-home"></i>Home</a></li>
@@ -65,7 +65,7 @@
 						<tr>
 							<th>Counterparty</th>
 							<th>Ultimate Parent Counter Party</th>
-							<th>News Analytics Score</th>
+							<th style="width:10%">News Analytics Score</th>
 							<th>Credit Rating</th>
 							<th>Last Refresh Time</th>
 						</tr>
@@ -74,16 +74,16 @@
 						<% if(data.length){ 
 						for(var i = 0;i < data.length;i++) { %>
 						<tr>
-							<td><a href="connectedcounterparty?cp_name=<%=data[i].CM_CP_NAME%>&cnctd_cp_id=<%=data[i].CM_CNCTD_CP_ID%>&ult_parnt_name=<%=data[i].CM_ULT_PARNT_NAME%>&ad_score=<%=data[i].AD_SCORE%>"><%=data[i].CM_CP_NAME%></a></td>
+							<td><%=data[i].CM_CP_NAME%></td>
 							<td><%=data[i].CM_ULT_PARNT_NAME%></td>
 							<%if(data[i].AD_SCORE <= 40 ) {%>
-								<td style="background-color: green;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: white;"><%=data[i].AD_SCORE%></span></a></td>
+								<td style="text-align:right;background-color: green;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: white;"><%=data[i].AD_SCORE%></span></a></td>
 							<%}else if(data[i].AD_SCORE > 40 && data[i].AD_SCORE < 70) {%>
-								<td style="background-color: yellow;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: black;"><%=data[i].AD_SCORE%></span></a></td>
+								<td style="text-align:right;background-color: yellow;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: black;"><%=data[i].AD_SCORE%></span></a></td>
 							<%}else if(data[i].AD_SCORE >= 70 && data[i].AD_SCORE < 80) {%>
-									<td style="background-color: orange;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: black;"><%=data[i].AD_SCORE%></span></a></td>
+									<td style="text-align:right;background-color: orange;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: black;"><%=data[i].AD_SCORE%></span></a></td>
 							<%}else{%>
-								<td style="background-color: red;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: white;"><%=data[i].AD_SCORE%></span></a></td>
+								<td style="text-align:right;background-color: red;"><a href="analytics?cp_id=<%=data[i].CM_CP_ID%>&cp_name=<%=data[i].CM_CP_NAME%>"><span style="color: white;"><%=data[i].AD_SCORE%></span></a></td>
 							<%}%>
 							<td><%=data[i].CM_CURRENT_RATING%></td>
 							<td><%=data[i].AD_SCORE_UPDTIME%></td>
@@ -100,18 +100,21 @@
 					<table style="width:215px;float:right;font-size: 12px">
 						<tr>
 							<td>
-								<div class="foo green"></div>0 - 69
+								<div class="foo green"></div>Low Risk
 							</td>
 							<td>
-								<div class="foo yellow"></div> 70 - 79 
+								<div class="foo yellow"></div>Caution
 							</td>
 							<td>
-								<div class="foo red"></div> 80 - 100
+								<div class="foo orange"></div>Alarming
+							</td>
+							<td>
+								<div class="foo red"></div>Extremely Alarming
 							</td>
 						</tr>
 					</table>
 				</div>
-				<% if(data.length && data.length > 10){ %>
+				<% if(data.length && data.length > 20){ %>
 					<div id="pager" class="pager" style="padding-bottom: 20px">
 							<form>
 								<img src="images/first.png" class="first"/>

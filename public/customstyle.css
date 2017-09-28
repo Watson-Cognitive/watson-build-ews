@@ -39,7 +39,7 @@ input, button {
 .cont {
   position: relative;
   height: 100%;
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg");
+  background-image: url("/images/main-bg.jpg");
   background-size: cover;
  # overflow: auto;
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -48,7 +48,7 @@ input, button {
 .demo {
   position: absolute;
   top: 50%;
-  left: 50%;
+  right: 0%;
   margin-left: -15rem;
   margin-top: -26.5rem;
   width: 30rem;
@@ -140,7 +140,7 @@ input, button {
   height: 4rem;
   margin: 5rem 0 2.2rem;
   color: rgba(255, 255, 255, 0.8);
-  background: #FF3366;
+  background: #0a9cd2;
   font-size: 1.5rem;
   border-radius: 3rem;
   cursor: pointer;

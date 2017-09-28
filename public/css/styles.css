@@ -445,6 +445,10 @@ div#intro .intro-content {
 	background: yellow;
 }
 
+.orange {
+	background: orange;
+}
+
 .red {
 	background: red;
 }
@@ -466,7 +470,7 @@ div#intro h2, div#intro p {
 }
 
 div#intro p {
-	font-size: 1.3em;
+	font-size: 1.7em;
 	color: #ddd;
 	line-height: 1.3em;
 }

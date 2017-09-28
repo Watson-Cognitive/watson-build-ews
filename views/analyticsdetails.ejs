@@ -39,37 +39,44 @@
 		var tagData = JSON.stringify(pgdata.tags);
 		var barData = JSON.stringify(pgdata.bar);
 		var sentiData = JSON.stringify(pgdata.senti);
-		tagData = tagData.replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
-		tagData = JSON.parse(tagData);
-		tagData.map(function(x){
-			var orientation = x.orientation;
-			if(orientation === "v"){
-				delete x.orientation;
-				var orientation_string = {class: "vertical"};
-				x.html = orientation_string;
-			}else{
-				delete x.orientation;
-			}
-			return x;
-		});
-		$('#tag_cloud').jQCloud(tagData);
+		if(tagData != undefined){
+			tagData = tagData.replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+			tagData = JSON.parse(tagData);
+			tagData.map(function(x){
+				var orientation = x.orientation;
+				if(orientation === "v"){
+					delete x.orientation;
+					var orientation_string = {class: "vertical"};
+					x.html = orientation_string;
+				}else{
+					delete x.orientation;
+				}
+				return x;
+			});
+			$('#tag_cloud').jQCloud(tagData);
+		}
 
-		barData = barData.replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
-		barData = JSON.parse(barData);
-		barData.map(function(x){
-			var orientation = x.orientation;
-			if(orientation === "v"){
-				delete x.orientation;
-				var orientation_string = {class: "vertical"};
-				x.html = orientation_string;
-			}else{
-				delete x.orientation;
-			}
-			return x;
-		});
-		chart(barData);
-		sentiData = JSON.parse(sentiData);
-		chart2(sentiData[0].POSITIVE,sentiData[0].NEGATIVE,sentiData[0].NEUTRAL);
+		if(barData != undefined){
+			barData = barData.replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+			barData = JSON.parse(barData);
+			barData.map(function(x){
+				var orientation = x.orientation;
+				if(orientation === "v"){
+					delete x.orientation;
+					var orientation_string = {class: "vertical"};
+					x.html = orientation_string;
+				}else{
+					delete x.orientation;
+				}
+				return x;
+			});
+			chart(barData);
+		}
+
+		if(sentiData != undefined){
+			sentiData = JSON.parse(sentiData);
+			chart2(sentiData[0].POSITIVE,sentiData[0].NEGATIVE,sentiData[0].NEUTRAL);
+		}
 	});
 
 	function getParameterByName(name, url) {
@@ -123,7 +130,7 @@
 	<div id="container" class="width">
 			<header> 
 					<div class="width">
-							<h1><a href="/">Early Warning System <strong> by TCS</strong></a></h1>
+							<img style="padding-top: 7px" src="images/EWSLogo.png" />
 							<nav>
 									<ul class="sf-menu dropdown">
 										<li><a href="#" id="homeMenu"><i class="fa fa-home"></i>Home</a></li>
@@ -157,10 +164,10 @@
 												<th>Source</th>
 												<th>Type</th>
 												<th>Geography</th>
-												<th>Negative</th>
+												<th style="width:7%">Negative Article</th>
 												<th>Total Score</th>
 												<th>Last Referred</th>
-										</tr>
+										</tr> 
 								</thead>
 								<tbody>
 										<% if(data.msl && data.msl.length){ 
@@ -169,8 +176,8 @@
 												<td><a href="newslinks?cp_name=<%=data.cp_name%>&cp_id=<%=data.cp_id%>&domain=<%=data.msl[i].NS_DOMAIN_NAME%>"><%=data.msl[i].NS_DOMAIN_NAME%></a></td>
 												<td><%=data.msl[i].Type%></td>
 												<td><%=data.msl[i].NS_GEOGRAPHY%></td>
-												<td><%=data.msl[i].NR_SCORE%></td>
-												<td><%=data.msl[i].NS_SCORE%></td>
+												<td style="text-align:right"><%=data.msl[i].NR_SCORE%></td>
+												<td style="text-align:right"><%=data.msl[i].NS_SCORE%></td>
 												<td><%=data.msl[i].NR_CAPTURE_DTTIME%></td>
 										</tr>
 										<% }
@@ -202,10 +209,6 @@
 				</section>
 				<aside class="sidebar big-sidebar right-sidebar" style="padding-bottom:13px">
 					<div>
-						<!-- <img src="/images/sentimeter_chart.png"></img> -->
-						<div style="height:200px" id="chartdiv2"> {{func()}} </div>	
-					</div>
-					<div>
 						<center style="padding-top: 10px;"><span class="my-h4">Latest News</span></center>
 						<table id="dashboardTable" class="tablesorter">
 								<thead>
@@ -216,7 +219,7 @@
 								</thead>
 								<tbody>
 										<% if(data.nhl && data.nhl.length){ 
-										for(var i = 0;i < data.msl.length;i++) { %>
+										for(var i = 0;i < data.nhl.length;i++) { %>
 										<tr>
 												<td><%=data.nhl[i].NR_NEWS_HEADER%></td>
 												<td><%=data.nhl[i].NR_PBLSH_DTTIME%></td>

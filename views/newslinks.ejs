@@ -38,7 +38,7 @@
 	<div id="container" class="width">
 		<header> 
 			<div class="width">
-				<h1><a href="/">Early Warning System <strong> by TCS</strong></a></h1>
+				<img style="padding-top: 7px" src="images/EWSLogo.png" />
 				<nav>
 					<ul class="sf-menu dropdown">
 						<li class="selected"><a href="#" id="homeMenu"><i class="fa fa-home"></i>Home</a></li>
@@ -74,7 +74,7 @@
                     <% if(data.nll && data.nll.length){ 
                         for(var i = 0;i < data.nll.length;i++) { %>
 						<tr>
-							<td><%=data.nll[i].NR_NEWS_HEADER%></td>
+							<td><a href="<%=data.nll[i].NR_NEWS_URL%>" target="_blank"><%=data.nll[i].NR_NEWS_HEADER%></a></td>
                             <td><%=data.nll[i].NR_SCORE%></td>
                             <td><%=data.nll[i].NR_PBLSH_DTTIME%></td>
                             <td><%=data.nll[i].NR_CAPTURE_DTTIME%></td>
@@ -88,6 +88,15 @@
 						<% } %>
 					</tbody>
 				</table>
+				<div>
+					<table style="width:215px;float:right;font-size: 12px">
+						<tr>
+							<td>
+								A notification will be sent to the Risk Officer when the CNA Score is more than or equal to 80
+							</td>
+						</tr>
+					</table>
+				</div>
 				<% if(data.length && data.length > 20){ %>
 				<div id="pager" class="pager" style="padding-bottom: 20px">
 					<form>

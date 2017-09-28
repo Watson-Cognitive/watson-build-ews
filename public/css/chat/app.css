@@ -63,7 +63,7 @@ div {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
 }
 
 #chat-column-holder {
@@ -107,6 +107,63 @@ div {
   transition-property: opacity, margin-top;
   transition-duration: 0.75s;
   transition-timing-function: ease-in;
+  border-radius : 50px 50px 50px 0px !important;
+}
+
+.faq-heading {
+  background-color: #d32384;
+  margin-top: 0.9375rem;
+  -webkit-transition-property: opacity, margin-top;
+  -webkit-transition-duration: 0.75s;
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-property: opacity, margin-top;
+  -moz-transition-duration: 0.75s;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-property: opacity, margin-top;
+  -o-transition-duration: 0.75s;
+  -o-transition-timing-function: ease-in;
+  -ms-transition-property: opacity, margin-top;
+  -ms-transition-duration: 0.75s;
+  -ms-transition-timing-function: ease-in;
+  transition-property: opacity, margin-top;
+  transition-duration: 0.75s;
+  transition-timing-function: ease-in;
+  border-radius : 50px 50px 50px 50px !important;
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  color : #ffffff;
+}
+
+.faq-elements {
+  background-color: #eaa8cc;
+  margin-top: 0.2rem;
+  -webkit-transition-property: opacity, margin-top;
+  -webkit-transition-duration: 0.75s;
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-property: opacity, margin-top;
+  -moz-transition-duration: 0.75s;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-property: opacity, margin-top;
+  -o-transition-duration: 0.75s;
+  -o-transition-timing-function: ease-in;
+  -ms-transition-property: opacity, margin-top;
+  -ms-transition-duration: 0.75s;
+  -ms-transition-timing-function: ease-in;
+  transition-property: opacity, margin-top;
+  transition-duration: 0.75s;
+  transition-timing-function: ease-in;
+  border-radius : 50px 50px 50px 0px !important;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  text-align: center;
+  font-size : 16px;
+  color : #ffffff;
+  word-spacing: 2px;
+  line-height : 23px;
 }
 
 .load .message-inner {
@@ -131,6 +188,7 @@ div {
   display: inline-block;
   margin-left: 2.5rem;
   min-width: 2.5rem;
+  border-radius : 50px 50px 0px 50px !important;
 }
 
 .from-user .message-inner p {
@@ -199,7 +257,7 @@ div {
   outline: none;
   background: transparent;
   font-size: 1.1rem;
-  color: #323232;
+  color:  #ffffff;   //#323232
   letter-spacing: 0.015rem;
   line-height: 1.3125rem;
   height: 2.5rem;
@@ -241,6 +299,7 @@ input:-moz-placeholder {
   border-bottom: 0.0625rem solid #aeaeae;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+  
 }
 
 #textInputDummy {
