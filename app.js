@@ -482,8 +482,8 @@ app.post('/auth', function(req, res) {
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 
 var nlu = new NaturalLanguageUnderstandingV1({
-  username: "1330ac9c-d229-48d1-8020-eca25df50d83",
-  password: "e4k30dXiHFvU",
+  username: "8072ace5-daf2-42ec-8eaf-f110818e1c87",
+  password: "41Ux0o120dNC",
   version_date: "2017-02-27"
 });
 
@@ -678,8 +678,8 @@ function cp_ns_scoring()
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Crawling Logic@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 var language_translator = watson.language_translator({
-	username: "fced617e-2776-4b28-89d4-f1d50508ef8c",
-	password: "47W7mgLPM7Dx",
+	username: "e327276e-701b-4a25-b848-dec82d3c73e1",
+	password: "yOs1xSXjQ4wb",
 	version: 'v2',
 	url: "https://gateway.watsonplatform.net/language-translator/api"
   });
@@ -903,10 +903,10 @@ setTimeout(function(){
 //DB2 Connection
 var db2 = {
         db: "BLUDB",
-        hostname: "dashdb-txn-flex-yp-sjc03-01.services.dal.bluemix.net",
+        hostname: "dashdb-txn-flex-yp-dal09-447.services.dal.bluemix.net",
         port: 50000,
         username: "bluadmin",
-        password: "Yjg1ZThkNjA5YThh",
+        password: "ZDk2N2U5ZTM5ZWI2",
         schema: "EWS_DATABASE"
      };
 
@@ -919,8 +919,8 @@ var Conversation = require('watson-developer-cloud/conversation/v1'); // watson 
 var conversation = new Conversation({
 	// If unspecified here, the CONVERSATION_USERNAME and CONVERSATION_PASSWORD env properties will be checked
 	// After that, the SDK will fall back to the bluemix-provided VCAP_SERVICES environment property
-	username: 'd1fbca2a-da62-4d75-8d61-363284774fc0',
-	password: 'm0Jz0onQNVoV',
+	username: '479ec2dc-087f-43e9-a693-7e76febcf768',
+	password: 'Pjk4AKR6WhJ7',
 	url: 'https://gateway.watsonplatform.net/conversation/api',
 	version_date: '2016-10-21',
 	version: 'v1'
@@ -934,7 +934,7 @@ var conversation = new Conversation({
 
 // Endpoint to be call from the client side
 app.post('/api/message', function(req, res) {
-	var workspace = 'a41ebcc2-fbd8-4743-89d9-7120d706cfc3';
+	var workspace = 'd0be947b-67bc-4ebc-ac00-bff355c31446';
 	if (!workspace) {
 	  return res.json({
 		'output': {
